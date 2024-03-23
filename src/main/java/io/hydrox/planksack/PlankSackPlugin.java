@@ -382,22 +382,33 @@ public class PlankSackPlugin extends Plugin
 	@Subscribe
 	public void onChatMessage(ChatMessage event)
 	{
-		// Hallowed Sepulchre
-		if (event.getType() == ChatMessageType.SPAM && event.getMessage().equals("You repair the broken bridge."))
+		if (event.getType() == ChatMessageType.SPAM)
 		{
+			int maxUsedPlanks;
+			// Hallowed Sepulchre
+			if (event.getMessage().equals("You repair the broken bridge."))
+			{
+				maxUsedPlanks = 2;
+			}
+			// Port Piscarilius Cranes
+			else if (event.getMessage().equals("You successfully repair the fishing crane."))
+			{
+				maxUsedPlanks = 3;
+			}
+			else
+			{
+				return;
+			}
+
 			// Any planks in the inventory are prioritised, and are removed after this chat message.
 			// Therefore, we need to delay this check by a bit to make sure it picks up inventory planks being used.
 			clientThread.invokeLater(() -> {
 				Multiset<Integer> current = createSnapshot(client.getItemContainer(InventoryID.INVENTORY));
 				Multiset<Integer> delta = Multisets.difference(inventorySnapshot, current);
-				switch (delta.size())
+				int usedPlanks = Math.max(0, maxUsedPlanks - delta.size());
+				if (usedPlanks > 0)
 				{
-					case 0:
-						setPlankCount(plankCount - 2);
-						break;
-					case 1:
-						setPlankCount(plankCount - 1);
-						break;
+					setPlankCount(plankCount - usedPlanks);
 				}
 			});
 		}
