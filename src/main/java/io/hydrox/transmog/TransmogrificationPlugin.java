@@ -190,6 +190,12 @@ public class TransmogrificationPlugin extends Plugin implements MouseWheelListen
 					partyManager.shareCurrentPreset();
 				});
 			}
+
+			if (uiManager.isUiCreated() && !uiManager.isVanillaUIHidden())
+			{
+				uiManager.removeCustomUI();
+				uiManager.createTab(uiManager.getEquipmentOverlay());
+			}
 		}
 		else if (e.getGameState() == GameState.LOGIN_SCREEN || e.getGameState() == GameState.HOPPING)
 		{

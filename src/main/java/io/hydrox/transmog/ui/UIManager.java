@@ -138,6 +138,11 @@ public class UIManager
 
 	}
 
+	public boolean isVanillaUIHidden()
+	{
+		return getContainer().getChild(1).isHidden();
+	}
+
 	void hideVanillaUI()
 	{
 		for (Widget child : getContainer().getNestedChildren())
