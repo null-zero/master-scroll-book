@@ -57,7 +57,7 @@ public class MasterScrollBookPlugin extends Plugin
 	 * 1-indexed
 	 * Left->Right, Top->Bottom, Left Page->Right Page
 	 */
-	private static final int VARBIT_SELECTED_DEFAULT_SCROLL = 5685;
+	private static final int VARBIT_SELECTED_DEFAULT_SCROLL = 10966;
 
 	@Inject
 	private Client client;
